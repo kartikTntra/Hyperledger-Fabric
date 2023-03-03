@@ -3,29 +3,29 @@
 cp ../orderer/mychannel.tx .
 export CORE_PEER_TLS_ENABLED=true
 ORDERER_CA=${PWD}/../orderer/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
-export PEER0_ORG1_CA=${PWD}/crypto-config-ca/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+export PEER0_HYPERSOFTADMIN_CA=${PWD}/crypto-config-ca/peerOrganizations/hypersoftAdmin.com/peers/peer0.hypersoftAdmin.com/tls/ca.crt
 export FABRIC_CFG_PATH=${PWD}/../config
 
-export CHANNEL_NAME=mychannel
+export CHANNEL_NAME=mpos_channel
 
-setGlobalsForPeer0Org1() {
-  export CORE_PEER_LOCALMSPID="Org1MSP"
-  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG1_CA
-  export CORE_PEER_MSPCONFIGPATH=${PWD}/crypto-config-ca/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+setGlobalsForPeer0HypersoftAdmin() {
+  export CORE_PEER_LOCALMSPID="HypersoftAdminMSP"
+  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_HYPERSOFTADMIN_CA
+  export CORE_PEER_MSPCONFIGPATH=${PWD}/crypto-config-ca/peerOrganizations/hypersoftAdmin.com/users/Admin@hypersoftAdmin.com/msp
   export CORE_PEER_ADDRESS=localhost:7051
 }
 
-setGlobalsForPeer1Org1() {
-  export CORE_PEER_LOCALMSPID="Org1MSP"
-  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_ORG1_CA
-  export CORE_PEER_MSPCONFIGPATH=${PWD}/crypto-config-ca/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+setGlobalsForPeer1HypersoftAdmin() {
+  export CORE_PEER_LOCALMSPID="HypersoftAdminMSP"
+  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_HYPERSOFTADMIN_CA
+  export CORE_PEER_MSPCONFIGPATH=${PWD}/crypto-config-ca/peerOrganizations/hypersoftAdmin.com/users/Admin@hypersoftAdmin.com/msp
   export CORE_PEER_ADDRESS=localhost:8051
 
 }
 
 createChannel() {
 
-  setGlobalsForPeer0Org1
+  setGlobalsForPeer0HypersoftAdmin
 
   peer channel create -o localhost:7050 -c $CHANNEL_NAME \
     --ordererTLSHostnameOverride orderer.example.com \
@@ -38,7 +38,7 @@ joinChannel() {
   setGlobalsForPeer0Org1
   peer channel join -b ./$CHANNEL_NAME.block
 
-  setGlobalsForPeer1Org1
+  setGlobalsForPeer1HypersoftAdmin
   peer channel join -b ./$CHANNEL_NAME.block
 }
 
