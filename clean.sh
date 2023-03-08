@@ -9,10 +9,10 @@ removeOrdererCA() {
   docker-compose -f ./orderer/ca-orderer.yaml down -v
 
 }
-removeOrg1CA() {
+removePlatformerCA() {
 
-  echo "Removing Org1 CA"
-  docker-compose -f ./org1/ca-org1.yaml down -v
+  echo "Removing Platformer CA"
+  docker-compose -f ./platformer/ca-platformer.yaml down -v
 
 }
 removeOrg2CA() {
@@ -25,13 +25,13 @@ removeOrderers() {
   echo "Removing orderers "
   docker-compose -f ./orderer/docker-compose-orderer.yaml down -v
 }
-removeOrg1() {
+removePlatformer() {
 
-  echo "Removing Org1 Peers"
-  docker-compose -f ./org1/docker-compose-peer.yaml down -v
+  echo "Removing Platformer Peers"
+  docker-compose -f ./platformer/docker-compose-peer.yaml down -v
 }
 removeOrg2() {
-  echo "Removing Org1 Peers"
+  echo "Removing Org2 Peers"
   docker-compose -f ./org2/docker-compose-peer.yaml down -v
 }
 removeExplorer() {
@@ -47,26 +47,26 @@ removeGrafanaPrometheus() {
   cd ..
 }
 removeOrdererCA
-removeOrg1CA
+removePlatformerCA
 removeOrg2CA
 removeOrderers
-removeOrg1
+removePlatformer
 removeOrg2
 removeExplorer
 removeGrafanaPrometheus
 echo "Removing crypto CA material"
 rm -rf ./orderer/fabric-ca
-rm -rf ./org1/fabric-ca
+rm -rf ./platformer/fabric-ca
 rm -rf ./org2/fabric-ca
 rm -rf ./orderer/crypto-config-ca
-rm -rf ./org1/crypto-config-ca
+rm -rf ./platformer/crypto-config-ca
 rm -rf ./org2/crypto-config-ca
-rm -rf ./org1/Org1MSPanchors.tx
+rm -rf ./platformer/platformerMSPanchors.tx
 rm -rf ./org2/Org2MSPanchors.tx
 rm -rf ./orderer/genesis.block
 rm -rf ./orderer/mychannel.tx
-rm -rf ./org1/mychannel.tx
-rm -rf ./org1/mychannel.block
+rm -rf ./platformer/mychannel.tx
+rm -rf ./platformer/mychannel.block
 rm -rf ./org2/mychannel.tx
 rm -rf ./org2/mychannel.block
 rm -rf ./explorer/dockerConfig/crypto-config

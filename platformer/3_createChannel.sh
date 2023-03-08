@@ -3,29 +3,29 @@
 cp ../orderer/mychannel.tx .
 export CORE_PEER_TLS_ENABLED=true
 ORDERER_CA=${PWD}/../orderer/crypto-config-ca/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
-export PEER0_HYPERSOFTADMIN_CA=${PWD}/crypto-config-ca/peerOrganizations/hypersoftAdmin.com/peers/peer0.hypersoftAdmin.com/tls/ca.crt
+export PEER0_PLATFORMER_CA=${PWD}/crypto-config-ca/peerOrganizations/platformer.com/peers/peer0.platformer.com/tls/ca.crt
 export FABRIC_CFG_PATH=${PWD}/../config
 
 export CHANNEL_NAME=mpos_channel
 
-setGlobalsForPeer0HypersoftAdmin() {
-  export CORE_PEER_LOCALMSPID="HypersoftAdminMSP"
-  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_HYPERSOFTADMIN_CA
-  export CORE_PEER_MSPCONFIGPATH=${PWD}/crypto-config-ca/peerOrganizations/hypersoftAdmin.com/users/Admin@hypersoftAdmin.com/msp
+setGlobalsForPeer0Platformer() {
+  export CORE_PEER_LOCALMSPID="PlatformerMSP"
+  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_PLATFORMER_CA
+  export CORE_PEER_MSPCONFIGPATH=${PWD}/crypto-config-ca/peerOrganizations/platformer.com/users/Admin@platformer.com/msp
   export CORE_PEER_ADDRESS=localhost:7051
 }
 
-setGlobalsForPeer1HypersoftAdmin() {
-  export CORE_PEER_LOCALMSPID="HypersoftAdminMSP"
-  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_HYPERSOFTADMIN_CA
-  export CORE_PEER_MSPCONFIGPATH=${PWD}/crypto-config-ca/peerOrganizations/hypersoftAdmin.com/users/Admin@hypersoftAdmin.com/msp
+setGlobalsForPeer1Platformer() {
+  export CORE_PEER_LOCALMSPID="PlatformerMSP"
+  export CORE_PEER_TLS_ROOTCERT_FILE=$PEER0_PLATFORMER_CA
+  export CORE_PEER_MSPCONFIGPATH=${PWD}/crypto-config-ca/peerOrganizations/platformer.com/users/Admin@platformer.com/msp
   export CORE_PEER_ADDRESS=localhost:8051
 
 }
 
 createChannel() {
 
-  setGlobalsForPeer0HypersoftAdmin
+  setGlobalsForPeer0Platformer
 
   peer channel create -o localhost:7050 -c $CHANNEL_NAME \
     --ordererTLSHostnameOverride orderer.example.com \
@@ -35,15 +35,15 @@ createChannel() {
 }
 
 joinChannel() {
-  setGlobalsForPeer0Org1
+  setGlobalsForPeer0Platformer
   peer channel join -b ./$CHANNEL_NAME.block
 
-  setGlobalsForPeer1HypersoftAdmin
+  setGlobalsForPeer1Platformer
   peer channel join -b ./$CHANNEL_NAME.block
 }
 
 updateAnchorPeers() {
-  setGlobalsForPeer0Org1
+  setGlobalsForPeer0Platformer
   peer channel update -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com -c $CHANNEL_NAME -f ./${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA
 
 }
