@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-setupplatformerCA() {
+setupPlatformerCA() {
 
   echo "Setting platformer CA"
   docker-compose -f ca-platformer.yaml up -d
@@ -11,7 +11,7 @@ setupplatformerCA() {
 }
 
 #here we are generating crypto material insted of cryptogen we are using CA
-createcertificatesForplatformer() {
+createcertificatesForPlatformer() {
   echo
   echo "Enroll the CA admin"
   echo
@@ -57,8 +57,8 @@ registerUsers() {
   echo
   fabric-ca-client register --caname ca.platformer.com --id.name platformeradmin --id.secret platformeradminpw --id.type admin --tls.certfiles ${PWD}/fabric-ca/platformer/tls-cert.pem
 }
-setupplatformerCA
-createcertificatesForplatformer
+setupPlatformerCA
+createcertificatesForPlatformer
 sleep 2
 nodeOrgnisationUnit
 sleep 2

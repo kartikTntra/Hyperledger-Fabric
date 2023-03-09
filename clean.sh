@@ -15,10 +15,10 @@ removePlatformerCA() {
   docker-compose -f ./platformer/ca-platformer.yaml down -v
 
 }
-removeOrg2CA() {
+removeHypersoftCA() {
 
-  echo "Removing Org2 CA"
-  docker-compose -f ./org2/ca-org2.yaml down -v
+  echo "Removing Hypersoft CA"
+  docker-compose -f ./hypersoft/ca-hypersoft.yaml down -v
 
 }
 removeOrderers() {
@@ -30,9 +30,9 @@ removePlatformer() {
   echo "Removing Platformer Peers"
   docker-compose -f ./platformer/docker-compose-peer.yaml down -v
 }
-removeOrg2() {
-  echo "Removing Org2 Peers"
-  docker-compose -f ./org2/docker-compose-peer.yaml down -v
+removeHypersoft() {
+  echo "Removing Hypersoft Peers"
+  docker-compose -f ./hypersoft/docker-compose-peer.yaml down -v
 }
 removeExplorer() {
   echo "Removing explorer"
@@ -48,27 +48,27 @@ removeGrafanaPrometheus() {
 }
 removeOrdererCA
 removePlatformerCA
-removeOrg2CA
+removeHypersoftCA
 removeOrderers
 removePlatformer
-removeOrg2
+removeHypersoft
 removeExplorer
 removeGrafanaPrometheus
 echo "Removing crypto CA material"
 rm -rf ./orderer/fabric-ca
 rm -rf ./platformer/fabric-ca
-rm -rf ./org2/fabric-ca
+rm -rf ./hypersoft/fabric-ca
 rm -rf ./orderer/crypto-config-ca
 rm -rf ./platformer/crypto-config-ca
-rm -rf ./org2/crypto-config-ca
+rm -rf ./hypersoft/crypto-config-ca
 rm -rf ./platformer/platformerMSPanchors.tx
-rm -rf ./org2/Org2MSPanchors.tx
+rm -rf ./hypersoft/HypersoftMSPanchors.tx
 rm -rf ./orderer/genesis.block
 rm -rf ./orderer/mychannel.tx
 rm -rf ./platformer/mychannel.tx
 rm -rf ./platformer/mychannel.block
-rm -rf ./org2/mychannel.tx
-rm -rf ./org2/mychannel.block
+rm -rf ./hypersoft/mychannel.tx
+rm -rf ./hypersoft/mychannel.block
 rm -rf ./explorer/dockerConfig/crypto-config
 rm -rf ./deployChaincode/*.tar.gz
 rm -rf ./deployChaincode/node_modules
